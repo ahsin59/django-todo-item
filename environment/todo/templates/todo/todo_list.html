@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todo-list</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<style>
+    body{
+		background-color: #638CB8;
+	}
+     input{
+	   	width: 100%;
+		  padding: 12px 20px;
+		  margin: 8px 0;
+		  box-sizing: border-box;
+	 }
+   input::placeholder {
+	  color: #d3d3d3;
+	}
+  .submit{
+		background-color: #6BA3E8;
+	}
+  
+</style>
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">TODO-LIST Items</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">coming soon <span class="sr-only">(current)</span></a>
+      </li>
+      
+    </ul>
+    
+  </div>
+</nav>
+    
+ <div class="container">
+        <table>
+
+            {% for item in items %}
+            <tr>
+                {% if item.done %}
+                <td><strike>{{ item.name }}</strike></td>
+                {% else %}
+                <td>{{ item.name }}</td>
+                {% endif %}
+                
+                 <td>
+                    <form method="POST" action="toggle/{{ item.id }}">
+                     {% csrf_token %}
+                        <input type="submit" value="Toggle">
+                    </form>
+                </td>
+               <td>
+                    <form method="GET" action="edit/{{ item.id}}">
+                    <input type="submit" value="Edit">
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" action="delete/{{ item.id }}">
+                        {% csrf_token %}
+                    <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <p>You have nothing to do.</p>
+            {% endfor %}
+          </table>
+       
+        <a  href="add" class="btn btn-lg btn-info" role="button"> Add an item</a>
+
+      </div>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
